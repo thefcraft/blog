@@ -318,19 +318,19 @@ footer .newsletter h2{
     padding-top: 13rem;
 }
 
-.right-logo h2 {
+.right-logo h1 {
 	color: #fff;
-	font-size: 8em;
+    font-size: 80px!important;
 	position: absolute;
 	transform: translate(0, -100%);
 }
 
-.right-logo h2:nth-child(1) {
+.right-logo h1:nth-child(1) {
 	color: transparent;
 	-webkit-text-stroke: 2px #333;
 }
 
-.right-logo h2:nth-child(2) {
+.right-logo h1:nth-child(2) {
 	color: #898989;
 	animation: animate 4s ease-in-out infinite;
 }

@@ -38,7 +38,7 @@ def index(title, description, data, keywords, url):
                            description = add_ellipsis(description),
                            post_date=post_date.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
                            url=f'https://blog.thefcraft.site/posts/{url}', 
-                           domain='https://blog.thefcraft.site'
+                           domain='blog.thefcraft.site'
                         )
 
 if __name__ == '__main__':    
