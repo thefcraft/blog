@@ -1,49 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#FFFFFF">
-    <title>Blogifyr – Uncover Gems, Explore Worlds.</title>
-    <meta name="robots" content="index,follow">
-    <meta name="title" content="Blogifyr – Uncover Gems, Explore Worlds.">
-    <meta name="description" content="Blogifyr: Dive into a world of captivating reads, absolutely free! Explore a myriad of topics meticulously curated to suit your interests.">
-      
-    <!-- Twitter meta tags -->
-    <meta name="twitter:description" content="Blogifyr: Dive into a world of captivating reads, absolutely free! Explore a myriad of topics meticulously curated to suit your interests.">
-    <meta name="twitter:title" content="Blogifyr – Uncover Gems, Explore Worlds.">
-    <meta property="twitter:domain" content="blog.thefcraft.site">
-    <meta property="twitter:url" content="https://blog.thefcraft.site/">
-    <meta name="twitter:card" content="summary_large_image">
-    <!-- Add other Twitter meta tags as needed -->
-      
-    <!-- Open Graph meta tags -->
-    <meta property="og:description" content="Blogifyr: Dive into a world of captivating reads, absolutely free! Explore a myriad of topics meticulously curated to suit your interests.">
-    <meta property="og:title" content="Blogifyr – Uncover Gems, Explore Worlds.">
-    <meta property="og:site_name" content="Blogifyr">
-    <meta property="og:url" content="https://blog.thefcraft.site/">
-    <!-- Add other Open Graph meta tags as needed -->
-      
- 
+{% extends "base.html" %}
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/static/img/icon.webp">
-    
-    <!-- CSS and JavaScript links -->
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/nav.css">
-    <link rel="stylesheet" href="/static/css/contentStyle.css">
-
-    <script type="text/javascript" src="/static/js/index.js"></script>
-
-    
-
-    <!-- CDN link to include MathJax: fro LaTeX  -->
-    <!-- <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script> -->
-
-
-
-    
+{% block baseHead %}
 
 
 
@@ -53,13 +10,12 @@
 <meta property="og:image" content="/static/img/banner.png">
 <meta name="twitter:image" content="/static/img/banner.png">
 <link rel="stylesheet" href="/static/css/newUser.css">
-<meta name="keywords" content="Blogifyr, free blogging platform, diverse topics, community-driven, storytelling, articles, writers, readers, content discovery, online blogging, free content, digital publications, personal essays, opinion pieces, creative writing, technology, culture, lifestyle, education">
+<meta name="keywords" content="{{ keywords or '' }}">
+
+{% endblock %}
 
 
-
-</head>
-<body>
-    
+{% block baseBody %}
 <!-- if login... -->
 <nav>
     <div class="nav-left-container">
@@ -99,7 +55,7 @@
         <div class="btn" onclick="window.location.href = '#newsletter'">Get started</div>
     </div>
 </nav>
-
+{% if not tag %}
 <div class="hero">
     <aside class="left">
         <h2>
@@ -117,11 +73,11 @@
         </div>
     </aside>
 </div>
-
+{% endif %}
 
 <div class="trending">
     <div class="head">
-        
+        {% if not tag %}
         <svg width="28" height="29" viewBox="0 0 28 29" fill="none" class="ji ah">
             <path fill="#fff" d="M0 .8h28v28H0z"></path>
             <g opacity="0.8" clip-path="url(#trending_svg__clip0)">
@@ -137,51 +93,53 @@
             </defs>
         </svg>
         <h2>Trending on Blogifyr</h2>    
-        
+        {% else %}
+        <div style="height: 29px;"></div>
+        {% endif %}
         
     </div>
     <div class="container">
-        
+        {% for post in trending %}
         <div class="item">
             <aside>
-                <span class="idx">01</span>
+                <span class="idx">{{ post.idx }}</span>
             </aside>
             <aside>
                 <div class="img">
-                    <img alt="ThefCraft" src="/static/userPNG/c5f67cbc-b58f-46cc-864a-5e48b2a6d582.jpg" width="20" height="20" loading="lazy">
-                    <a href="/about">
-                        <h4>ThefCraft</h4>
+                    <img alt="{{ post.author }}" src="/static/userPNG/{{ post.author_img if post.author_img else 'None.png' }}" width="20" height="20" loading="lazy">
+                    <a href="{{ post.author_url }}">
+                        <h4>{{ post.author }}</h4>
                     </a>
                 </div>
 
-                <a href="/posts/building-an-http-server-in-c-a-step-by-step-guide-3c62e2e8">
+                <a href="{{ post.url }}">
                     <div>
-                        <h2 class="overflow-ellipsis">Building an HTTP Server in C: A Step-by-Step Guide</h2>
+                        <h2 class="overflow-ellipsis">{{ post.title }}</h2>
                     </div>
-                    <span>May 21, 2024 · 6 min read</span>
+                    <span>{{ post.date }} · {{ post.length }} read</span>
                 </a>
             </aside>
         </div>
-        
+        {% endfor %}
     </div>
 </div>
 
 <div class="root">
     <aside>
         <div class="container" id="postsContainer">
-            
+            {% for post in home_posts %}
             <div class="item">
                 <aside style="width: -webkit-fill-available;">
                     <div class="img">
-                        <img alt="ThefCraft" src="/static/userPNG/c5f67cbc-b58f-46cc-864a-5e48b2a6d582.jpg" width="20" height="20" loading="lazy">
-                        <a href="/about">
-                            <h4>ThefCraft</h4>
+                        <img alt="{{ post.author }}" src="/static/userPNG/{{ post.author_img if post.author_img else 'None.png' }}" width="20" height="20" loading="lazy">
+                        <a href="{{ post.author_url }}">
+                            <h4>{{ post.author }}</h4>
                         </a>
                     </div>
-                    <a href="/posts/building-an-http-server-in-c-a-step-by-step-guide-3c62e2e8">
+                    <a href="{{ post.url }}">
                         <div class="title" id="title_hover">
-                            <h2 class="overflow-ellipsis">Building an HTTP Server in C: A Step-by-Step Guide</h2>
-                            <h3 class="overflow-ellipsis-3">This blog post offers a guide on building an HTTP server using C. It covers fundamental steps such ...</h3>
+                            <h2 class="overflow-ellipsis">{{ post.title }}</h2>
+                            <h3 class="overflow-ellipsis-3">{{ post.subtitle }}</h3>
                         </div>
                     </a>
                     <div class="meta">
@@ -189,40 +147,40 @@
                             <!-- <a style="background-color: #f2f2f2; padding: 3px 8px; border-radius: 99em; margin-right: 8px;"  
                                 onmouseover="this.style.backgroundColor='#e7e7e7'"
                                 onmouseout="this.style.backgroundColor='#f2f2f2'"
-                                href="/tag/Low-level">Low-level</a>     -->
-                            <a href="/posts/building-an-http-server-in-c-a-step-by-step-guide-3c62e2e8">
-                                <span>May 21, 2024 · 6 min read</span>
+                                href="{{ post.tag_url }}">{{ post.tag }}</a>     -->
+                            <a href="{{ post.url }}">
+                                <span>{{ post.date }} · {{ post.length }} read</span>
                             </a>
                         </div>
                     </div>
 
                 </aside>
                 <aside style="display: flex;align-items: center;">
-                    
-                    <a href="/posts/building-an-http-server-in-c-a-step-by-step-guide-3c62e2e8">
-                        <img alt="Building an HTTP Server in C: A Step-by-Step Guide" class="blog-img" src="https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview/http_request.png" width="200" height="134"
+                    {% if post.img %}
+                    <a href="{{ post.url }}">
+                        <img alt="{{ post.title }}" class="blog-img" src="{{ post.img }}" width="200" height="134"
                             loading="lazy">
                     </a>
-                    
+                    {% else %}
+                    <div class="blog-img"></div>
+                    {% endif %}
 
                 </aside>
             </div>
-            
+            {% endfor %}
         </div>
     </aside>
     <aside class="right" id="right-fixed-container">
         <div id="right-fixed" style="max-width: 400px;">
             <h2>Discover more of what matters to you</h2>
             <div class="tags">
-                
-                    
-                    <a href="/tag/AI">AI</a>    
-                    
-                
-                    
-                    <a href="/tag/Programming">Programming</a>    
-                    
-                
+                {% for tg in trendingTags %}
+                    {% if tag and tg.name == tag.name %}
+                    <a href="" class="active">{{ tg.name }}</a>    
+                    {% else %}
+                    <a href="/tag/{{ tg.url }}">{{ tg.name }}</a>    
+                    {% endif %}
+                {% endfor %}
             </div>
             <a href="/tag" class="more">See more topics</a>
             <div class="side-footer">
@@ -288,7 +246,4 @@
         }
     }
 </script>
-
-    
-</body>
-</html>
+{% endblock %}
