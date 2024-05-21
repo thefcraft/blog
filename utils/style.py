@@ -320,7 +320,7 @@ class blog:
                 <div class="newsletter" id="newsletter">
                     <h2>Sign up for my newsletter</h2>
                     <p>Get notified when I post a new article. Unsubscribe at any time, and I promise not to send any spam :)</p>
-                    <form action="" method="post">
+                    <form action="https://formspree.io/f/mbjnelqe" method="POST">
                     <input type="email" id="email" name="EMAIL" autocomplete="email" required="" placeholder="Your email">
                     <button style="padding: 0px;" type="submit">
                         <div style="display:flex; align-items: center; padding: 4px 8px;">

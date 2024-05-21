@@ -54,6 +54,23 @@ nav .nav-right-container .btn a{
     color: #242424b5 !important;
     cursor: pointer;
 }
+
+footer{
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 23px 0;
+    background-color: #f9f9f9;
+}
+footer a{
+    all: unset;
+    cursor: pointer;
+}
+footer a:hover{
+    color: #242424b5;
+}
+
 @media only screen and (max-width: 750px){
     nav .nav-right-container .dnon{
         display: none;
