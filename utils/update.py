@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from style import blog, add_ellipsis, extract_markdown, readingTime, get_url, html_readingTime, html_postDate, html_title, html_img, html_desc, html_tag, get_url_by_name
-import os, json
+import os, json, random
 import xml.etree.ElementTree as ET
 from pprint import pprint
 from bs4 import BeautifulSoup
@@ -26,16 +26,21 @@ def Trending(n=3):
               'author_url': '/about',
               'author_img': 'c5f67cbc-b58f-46cc-864a-5e48b2a6d582.jpg'} for idx, (b, url) in enumerate(blogs)]
     return posts
+
+allTags = []
+
+def updateAndReturnTags(self):
+    allTags.extend(self)
+    return self
+
 def get_tags():
     tags = [{
             'name': name,
             'url': name,
-    } for name in 
-            os.listdir( os.path.join(basedir, '..\\tag') )
-         if os.path.isdir(os.path.join(basedir, '..\\tag', name) )]
+    } for name in set(allTags)]
     return tags
 def TrendingTags(n=9):
-    return get_tags()[:n]
+    return list(set(allTags))[:n]
 
 def get_posts():
     blogs = [(os.path.join(outdir, i, 'index.html'), i) for i in os.listdir(outdir) if os.path.isdir(os.path.join(outdir, i))]
@@ -45,7 +50,7 @@ def get_posts():
                   'img': html_img(b),
                   'tag': html_tag(b)[0],
                   'tag_url': f'/tag/{get_url_by_name(html_tag(b)[0])}',
-                  'tags': html_tag(b),
+                  'tags': updateAndReturnTags(html_tag(b)),
                   'date': f"{html_postDate(b)}",
                   'length': f'{html_readingTime(b)} min',
                   'author': 'ThefCraft',

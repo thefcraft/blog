@@ -41,15 +41,6 @@ def index(title, description, data, keywords, url, tags, timestamp=None):
                            domain='blog.thefcraft.site'
                         )
 
-def create_tags_if_missing(tags):
-    path = os.path.join(inpath, '..', 'tag')
-    exists = [name for name in os.listdir(path) if os.path.isdir(os.path.join(path, name))]
-    for tag in tags:
-        if tag in exists: continue
-        os.makedirs(os.path.join(path, tag))
-        with open(os.path.join(path, tag, 'index.html'), 'w') as f: ...
-        print(f"NEW TAG {tag}")
-
 if __name__ == '__main__': 
     for md_name in os.listdir(inpath):
         try:
@@ -61,7 +52,6 @@ if __name__ == '__main__':
                 title = metadata['title']
                 description = metadata.get('description')
                 tags = metadata['tags']
-            create_tags_if_missing(tags)
             
             url = get_url(title, key=sha256(title), blog_id=int(md_name.removesuffix('.md')), short_url=True) 
             outpath = os.path.join(outdir, url)
