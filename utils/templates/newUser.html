@@ -19,7 +19,7 @@
 <!-- if login... -->
 <nav>
     <div class="nav-left-container">
-        <a href="/">
+        <a href="/" class="dnon">
             <svg viewBox="0 0 410 109" style="height: 100%;" preserveAspectRatio="xMidYMid meet" class="css-8aabad"
                 id="dgegagha">
                 <defs id="SvgjsDefs2161">
@@ -47,6 +47,20 @@
                 </g>
             </svg>
         </a>
+
+        
+        <form action="/search/index.html" method="get">
+            <div class="search-field" >
+                <div class="search-field-img">
+                    <button type="submit" style="all: unset;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.1 11.06a6.95 6.95 0 1 1 13.9 0 6.95 6.95 0 0 1-13.9 0zm6.94-8.05a8.05 8.05 0 1 0 5.13 14.26l3.75 3.75a.56.56 0 1 0 .8-.79l-3.74-3.73A8.05 8.05 0 0 0 11.04 3v.01z" fill="currentColor"></path></svg>
+                    </button>
+                </div>
+                <div>
+                    <input value="" type="text" name="query" id="query" placeholder="Search">
+                </div>
+            </div>
+        </form>
 
     </div>
     <div class="nav-right-container">
@@ -181,7 +195,7 @@
                     {% if tag and tg.name == tag.name %}
                     <a href="" class="active">{{ tg.name }}</a>    
                     {% else %}
-                    <a href="/tag/{{ tg.url }}">{{ tg.name }}</a>    
+                    <a href="/search/index.html?tag={{ tg.url }}">{{ tg.name }}</a>    
                     {% endif %}
                 {% endfor %}
             </div>
@@ -224,19 +238,6 @@
     // Sample array of blog objects (titles are assumed to be unique for simplicity)
     let allblogs = [    
     ];
-
-    // Function to search for blogs based on title
-    function searchBlogs(query) {
-        query = query.toLowerCase(); // Convert query to lowercase for case-insensitive search
-
-        // Filter blogs array based on the query
-        const results = allblogs.filter(blog =>
-            blog.title.toLowerCase().includes(query)
-        );
-
-        return results;
-    }
-    // searchBlogs('React');
 
     function getRandomElements(array, numElements) {
         // Sort the array randomly
@@ -321,6 +322,7 @@
                     ${ ifelseblock }
                 </aside>
             </div>`;
+
                     });
 
             })  
@@ -341,7 +343,7 @@
             // console.log(data.posts);
             let tags = getRandomElements(data.tags, 9);
             tags.forEach(tag => {
-                trendingTags.innerHTML += `<a href="/tag/${ tag.url} ">${ tag.name }</a>`;
+                trendingTags.innerHTML += `<a href="/search/index.html?tag=${ tag.url} ">${ tag.name }</a>`;
             });
         })
         .catch(error => {

@@ -25,7 +25,7 @@ nav{
     background-color: #156d12!important;
 }
 nav .nav-left-container{
-    padding: .75rem;
+    padding: .7rem;
 }
 nav .nav-right-container{
     color: #242424;
@@ -72,7 +72,7 @@ footer a:hover{
 }
 
 @media only screen and (max-width: 750px){
-    nav .nav-right-container .dnon{
+    nav .dnon{
         display: none;
     }
 }

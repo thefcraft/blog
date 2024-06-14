@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
 nav{
-    height: 75px;
+    height: 60px;
     border-bottom: 1px solid #242424;
     background-color: #ffc017;
 
@@ -29,7 +29,7 @@ nav{
     background-color: #156d12!important;
 }
 nav .nav-left-container{
-    padding: 1rem;
+    padding: .7rem;
 }
 .nav-transparent .nav-left-container a{
     color: #fff ;
@@ -414,6 +414,10 @@ footer .newsletter h2{
     .trending .container{
         grid-template-columns: repeat(2, 1fr);
     }
+    .loadMoreBtn{
+        margin-top: -1rem;
+        margin-bottom: -1rem;
+    }
     /* .root .right{ */
         /* display: none; */
     /* } */
@@ -456,7 +460,7 @@ footer .newsletter h2{
     .trending .container{
         grid-template-columns: repeat(1, 1fr);
     }
-    nav .nav-right-container .dnon{
+    nav .dnon{
         display: none;
     }
     .root .container{

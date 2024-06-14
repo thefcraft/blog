@@ -292,7 +292,7 @@ class blog:
     def getFooterHTML(self):
         # {''.join([f'<a href="/tag/{get_url_by_name(i)}">{i}</a>' for i in self.tags])}
         html = f'''<div class="tags" id="tag-footer">
-                {''.join([f'<a href="/tag/{get_url_by_name(i)}">{i}</a>' for i in self.tags])}
+                {''.join([f'<a href="/search/index.html?tag={get_url_by_name(i)}">{i}</a>' for i in self.tags])}
             </div>'''
         html += f'''<div class="blog-reaction-div" id="reaction-footer" style="border:none">
                 <div class="blog-reaction">
