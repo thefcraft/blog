@@ -9,7 +9,7 @@
         <loc>https://blog.thefcraft.site/</loc>
         <changefreq>daily</changefreq>
         <priority>1</priority>
-        <lastmod>2024-05-21T12:01:24+05:30</lastmod>
+        <lastmod>2024-06-14T11:20:03+05:30</lastmod>
     </url>
     <url>
         <loc>https://blog.thefcraft.site/posts/</loc>
@@ -47,7 +47,27 @@
         <priority>1</priority>
     </url>
 	<url>
-        <loc>https://blog.thefcraft.site/posts/building-an-http-server-in-c-a-step-by-step-guide-3c62e2e8</loc>
+        <loc>https://blog.thefcraft.site/posts/building-an-http-server-in-c-a-step-by-step-guide-d86bc001</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1</priority>
+    </url>
+	<url>
+        <loc>https://blog.thefcraft.site/posts/python-from-zero-to-hero-ace1850b</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1</priority>
+    </url>
+	<url>
+        <loc>https://blog.thefcraft.site/posts/the-benefits-of-mindfulness-meditation-for-mental-health-ed18a9ea</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1</priority>
+    </url>
+	<url>
+        <loc>https://blog.thefcraft.site/posts/the-importance-of-cybersecurity-in-the-digital-age-e7968249</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1</priority>
+    </url>
+	<url>
+        <loc>https://blog.thefcraft.site/posts/the-rise-of-artificial-intelligence-transforming-industries-and-everyday-life-e422690a</loc>
         <changefreq>monthly</changefreq>
         <priority>1</priority>
     </url>

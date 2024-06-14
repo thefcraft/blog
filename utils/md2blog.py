@@ -1,6 +1,6 @@
 from flask import Flask, render_template
-from style import blog, add_ellipsis, extract_markdown, readingTime, get_url, extract_metadata_and_markdown, sha256, get_img
-import os
+from style import blog, add_ellipsis, extract_markdown, readingTime, get_url, extract_metadata_and_markdown, sha256, get_img, html_timestamp
+import os, random
 from datetime import datetime
 basedir = os.path.dirname(os.path.abspath(__file__))
 
@@ -8,8 +8,8 @@ inpath = os.path.join(basedir, '..\\md')
 outdir = os.path.join(basedir, '..\\posts')
 app = Flask(__name__, template_folder=os.path.join(basedir, 'templates'), static_folder=os.path.join(os.path.join(basedir, '..'), 'static'))
 
-def index(title, description, data, keywords, url):
-    post_date = datetime.now()
+def index(title, description, data, keywords, url, tags, timestamp=None):
+    post_date = datetime.now() if timestamp is None else timestamp
     b = blog(user='ThefCraft',
         userPNG='c5f67cbc-b58f-46cc-864a-5e48b2a6d582.jpg',
         userFollowers='00',
@@ -19,8 +19,8 @@ def index(title, description, data, keywords, url):
         post_date=f"{post_date.strftime('%b %d, %Y')}",
         read_time=f'{readingTime(data)} min',
         reactions={
-            'claps': 12,
-            'Responds': '1'
+            'claps': random.randint(1, 999),
+            'Responds': str(random.randint(1, 999))
         },
         tags=tags)
     b.add(extract_markdown(data))
@@ -41,10 +41,19 @@ def index(title, description, data, keywords, url):
                            domain='blog.thefcraft.site'
                         )
 
-if __name__ == '__main__':    
-    for md in os.listdir(inpath):
+def create_tags_if_missing(tags):
+    path = os.path.join(inpath, '..', 'tag')
+    exists = [name for name in os.listdir(path) if os.path.isdir(os.path.join(path, name))]
+    for tag in tags:
+        if tag in exists: continue
+        os.makedirs(os.path.join(path, tag))
+        with open(os.path.join(path, tag, 'index.html'), 'w') as f: ...
+        print(f"NEW TAG {tag}")
+
+if __name__ == '__main__': 
+    for md_name in os.listdir(inpath):
         try:
-            with open(os.path.join(inpath, md), 'r', encoding='utf') as f:
+            with open(os.path.join(inpath, md_name), 'r', encoding='utf') as f:
                 data = f.read()
                 metadata, md = extract_metadata_and_markdown(data)
                 assert  metadata.get('layout') == 'post'
@@ -52,20 +61,32 @@ if __name__ == '__main__':
                 title = metadata['title']
                 description = metadata.get('description')
                 tags = metadata['tags']
-
-            url = get_url(title, key=sha256(md), blog_id=0, short_url=True)
-            outpath = os.path.join(outdir, url)
-            if os.path.exists(outpath): 
-                print(f"ALREADY EXISTS : {url}")
-                continue
+            create_tags_if_missing(tags)
             
+            url = get_url(title, key=sha256(title), blog_id=int(md_name.removesuffix('.md')), short_url=True) 
+            outpath = os.path.join(outdir, url)
+            timestamp = None
+            if os.path.exists(outpath): 
+                try:
+                    with open(os.path.join(outpath, 'sha256.hash'), 'rb') as fhash: hash_read = fhash.read()
+                except FileNotFoundError: ...
+                else:
+                    if hash_read == sha256(data):
+                        print(f"ALREADY EXISTS : {url}")
+                        continue
+                    print(f"UPDATING EXISTS : {url}")
+                    timestamp = html_timestamp(os.path.join(outpath, 'index.html'))
+                finally:
+                    with open(os.path.join(outpath, 'sha256.hash'), 'wb') as fhash: fhash.write(sha256(data))
+                
             with app.app_context(): 
                 if not os.path.exists(outpath): os.makedirs(outpath)
                 with open(os.path.join(outpath, 'index.html'), 'w', encoding='utf') as f:
-                    f.write(index(title, description, md, keywords = 'keywords in head of the post', url=url))
-
-            print(f"CREATED : {url}")
+                    f.write(index(title, description, md, keywords = 'keywords in head of the post', url=url, tags=tags, timestamp=timestamp))
+                with open(os.path.join(outpath, 'sha256.hash'), 'wb') as fhash: fhash.write(sha256(data))
+                
+            if not timestamp: print(f"CREATED : {url}")
         except KeyboardInterrupt: break
-        except Exception as e:
-            print(f"ERROR : {url}")
+        # except Exception as e:
+        #     print(f"ERROR : {url}")
     

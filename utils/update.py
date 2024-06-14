@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from style import blog, add_ellipsis, extract_markdown, readingTime, get_url, html_readingTime, html_postDate, html_title, html_img, html_desc, html_tag, get_url_by_name
-import os
+import os, json
 import xml.etree.ElementTree as ET
 from pprint import pprint
 from bs4 import BeautifulSoup
@@ -26,14 +26,16 @@ def Trending(n=3):
               'author_url': '/about',
               'author_img': 'c5f67cbc-b58f-46cc-864a-5e48b2a6d582.jpg'} for idx, (b, url) in enumerate(blogs)]
     return posts
-def TrendingTags(n=9):
+def get_tags():
     tags = [{
             'name': name,
             'url': name,
     } for name in 
-            os.listdir( os.path.join(basedir, '..\\tag') )[:n]
+            os.listdir( os.path.join(basedir, '..\\tag') )
          if os.path.isdir(os.path.join(basedir, '..\\tag', name) )]
     return tags
+def TrendingTags(n=9):
+    return get_tags()[:n]
 
 def get_posts():
     blogs = [(os.path.join(outdir, i, 'index.html'), i) for i in os.listdir(outdir) if os.path.isdir(os.path.join(outdir, i))]
@@ -43,6 +45,7 @@ def get_posts():
                   'img': html_img(b),
                   'tag': html_tag(b)[0],
                   'tag_url': f'/tag/{get_url_by_name(html_tag(b)[0])}',
+                  'tags': html_tag(b),
                   'date': f"{html_postDate(b)}",
                   'length': f'{html_readingTime(b)} min',
                   'author': 'ThefCraft',
@@ -111,7 +114,27 @@ def update_sitemap():
     with open(os.path.join(basedir, '..', 'sitemap.xml'), 'w') as f:
         f.write(xml)
 
+def split_into_chunks(lst, chunk_size):
+    """Splits a list into chunks of a given size."""
+    return [lst[i:i + chunk_size] for i in range(0, len(lst), chunk_size)]
+
+ 
+
+def update_api():
+    posts_chunks = split_into_chunks(get_posts(), 16)   
+    for idx, chunk in enumerate(posts_chunks, 1):
+        with open(os.path.join(basedir, '..', 'api', f'posts_{idx}.json'), 'w') as f: json.dump({
+            "posts": chunk
+        }, f)
+    with open(os.path.join(basedir, '..', 'api', f'posts.json'), 'w') as f: json.dump({
+            "posts_chunk": [f'posts_{idx}.json' for idx, chunk in enumerate(posts_chunks, 1)]
+        }, f)
+    with open(os.path.join(basedir, '..', 'api', 'tags.json'), 'w') as f: json.dump({
+        "tags": get_tags()
+    }, f)
+
 def index():
+    # DONT remove trending and home_posts here as if you remove it then this site is not accessible by bots anymore
     return render_template('newUser.html', 
                                trending=Trending(), 
                                trendingTags=TrendingTags(), 
@@ -121,6 +144,7 @@ def index():
                                domain='blog.thefcraft.site')
 
 if __name__ == '__main__':
+    update_api()
     with app.app_context(): 
         with open(os.path.join(os.path.join(basedir), '..\\index.html'), 'w', encoding='utf') as f:
             f.write(index())

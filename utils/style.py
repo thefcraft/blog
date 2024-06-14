@@ -3,6 +3,7 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 from werkzeug.utils import secure_filename
 from secrets import token_bytes
+from datetime import datetime
 import hashlib
 import os
 import re
@@ -171,6 +172,15 @@ def extract_metadata_and_markdown(text):
     metadata = yaml.safe_load(metadata_content)
     md = re.sub(pattern, '', text, count=1, flags=re.DOTALL).lstrip()
     return (metadata, md)
+
+def html_timestamp(path):
+    with open(path, 'r', encoding='utf') as f:
+        soup = BeautifulSoup(f.read(), 'html.parser')
+        meta_tag = soup.find('meta', property='article:published_time')
+        if meta_tag:
+            published_time = meta_tag['content']
+            return datetime.strptime(published_time, '%Y-%m-%dT%H:%M:%S.%fZ')
+        else: return None
 
 def html_title(path):
     with open(path, 'r', encoding='utf') as f:

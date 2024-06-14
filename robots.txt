@@ -1,9 +1,4 @@
 User-agent: *
-Disallow: /static
-Disallow: /posts
-Disallow: /utils
-Disallow: /md
-Disallow: /user
 Disallow: /tag
 Disallow: /tag/*
 Sitemap: https://blog.thefcraft.site/sitemap.xml
