@@ -83,7 +83,7 @@ def update_sitemap():
         <priority>1</priority>
     </url>
         <url>
-        <loc>https://blog.thefcraft.site/tag/</loc>
+        <loc>https://blog.thefcraft.site/search/</loc>
         <changefreq>monthly</changefreq>
         <priority>1</priority>
     </url>

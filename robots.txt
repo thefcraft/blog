@@ -1,4 +1,2 @@
 User-agent: *
-Disallow: /tag
-Disallow: /tag/*
 Sitemap: https://blog.thefcraft.site/sitemap.xml
