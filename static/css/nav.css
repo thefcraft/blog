@@ -70,6 +70,55 @@ nav{
     color: var(--fg-color);
 }
 
+
+nav .nav-left-container a svg #SvgjsG2164{
+    color: var(--fg-color); 
+}
+
+.checkbox {
+    opacity: 0;
+    position: absolute;
+}
+
+.checkbox-label {
+    background-color: #111;
+    width: 50px;
+    height: 26px;
+    border-radius: 50px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .fa-moon{
+    width: 20px;
+    height: 20px;
+  }
+  .fa-sun{
+    width: 18px;
+    height: 18px;
+    margin-right: 3px;
+  }
+  .fa-moon {fill: #f1c40f;}
+  .fa-sun {fill: #f39c12;}
+  
+  .checkbox-label .ball {
+    background-color: #fff;
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    border-radius: 50%;
+    transition: transform 0.2s linear;
+  }
+  
+  .checkbox:checked + .checkbox-label .ball {
+    transform: translateX(24px);
+  }
+  
+  
 @media only screen and (max-width: 750px) {
     .nav-right-container{
         gap: .5rem;

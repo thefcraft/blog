@@ -36,7 +36,43 @@
 
     <script type="text/javascript" src="/static/js/index.js"></script>
 
-    
+    <script>
+        // Function to add dark mode stylesheet
+        function addDarkMode() {
+            let head = document.getElementsByTagName('HEAD')[0];
+            let link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = '/static/css/darkmode.css';
+            link.id = 'dark-mode-stylesheet';  // Adding an id for easy removal
+            head.appendChild(link);
+        }
+
+        // Function to remove dark mode stylesheet
+        function removeDarkMode() {
+            let darkModeStylesheet = document.getElementById('dark-mode-stylesheet');
+            if (darkModeStylesheet) {
+                darkModeStylesheet.parentNode.removeChild(darkModeStylesheet);
+            }
+        }
+
+        function isDarkMode() {
+            let darkModeStylesheet = document.getElementById('dark-mode-stylesheet');
+            if (darkModeStylesheet) {
+                return true;
+            }
+            return false;
+        }
+
+        function changeTheme(elem) {
+            if(document.getElementById('dark-mode-stylesheet')){
+                removeDarkMode();
+            }else{
+                addDarkMode();
+            }   
+        }
+
+        </script>
 
     <!-- CDN link to include MathJax: fro LaTeX  -->
     <!-- <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script> -->
@@ -50,6 +86,30 @@
 <body>
     {% block baseBody %}
     {% endblock %}
-    
+    <script>
+
+        
+        const checkbox = document.getElementById("checkbox")
+        checkbox.checked = !isDarkMode();
+        checkbox.addEventListener("change", () => {
+            localStorage.setItem('darkmode', !checkbox.checked);
+            console.log("darkmode set to: ", !checkbox.checked);
+            if (checkbox.checked) removeDarkMode();
+            else addDarkMode();
+        })
+
+        let darkmode = localStorage.getItem('darkmode');
+        if (darkmode != null) {
+            console.log(darkmode);
+            if (darkmode==='true') {
+                addDarkMode();
+                checkbox.checked = false;
+            }
+        }else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                addDarkMode();
+                checkbox.checked = false;
+        }
+    </script>
+
 </body>
 </html>
