@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#FFFFFF">
+    <title>Blogifyr – Uncover Gems, Explore Worlds.</title>
+    <meta name="robots" content="index,follow">
+    <meta name="title" content="'Blogifyr – Uncover Gems, Explore Worlds.">
+    <meta name="description" content="Blogifyr: Dive into a world of captivating reads, absolutely free! Explore a myriad of topics meticulously curated to suit your interests.">
+
+    <meta name="google-site-verification" content="xPrngE4BmGDuGDj3kSBkTdi5lWGj3iu0DSeUKEZMz74" />
+      
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/static/img/icon.webp">
+    
+    <!-- CSS and JavaScript links -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/nav.css">
+    <link rel="stylesheet" href="/static/css/contentStyle.css">
+
+    <!-- codeHighlighter -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/highlightjs@9.16.2/styles/atom-one-dark.css"> -->
+    <link rel="stylesheet" href="https://unpkg.com/highlightjs@9.16.2/styles/atom-one-light.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+      // hljs.initHighlightingOnLoad();
+      hljs.highlightAll()
+    </script>
+
+      <!-- CDN link to include MathJax: fro LaTeX  -->
+      <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+      <link rel="icon" type="image/x-icon" href="/static/img/icon.webp">
+
+      <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css"> -->
+      <!-- <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script> -->
+      <script src="https://unpkg.com/tiny-markdown-editor/dist/tiny-mde.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="https://unpkg.com/tiny-markdown-editor/dist/tiny-mde.min.css"/>
+      
+      <link rel="stylesheet" href="/static/css/new-story.css">
+
+      <script src="https://cdn.jsdelivr.net/npm/markdown/lib/markdown.js"></script>
+      <!-- <script>
+          var simplemde = new SimpleMDE();
+      </script> -->
+
+      <script>
+        // Function to add dark mode stylesheet
+        function addDarkMode() {
+            let head = document.getElementsByTagName('HEAD')[0];
+            let link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = '/static/css/darkmode.css';
+            link.id = 'dark-mode-stylesheet';  // Adding an id for easy removal
+            head.appendChild(link);
+        }
+
+        // Function to remove dark mode stylesheet
+        function removeDarkMode() {
+            let darkModeStylesheet = document.getElementById('dark-mode-stylesheet');
+            if (darkModeStylesheet) {
+                darkModeStylesheet.parentNode.removeChild(darkModeStylesheet);
+            }
+        }
+
+        function isDarkMode() {
+            let darkModeStylesheet = document.getElementById('dark-mode-stylesheet');
+            if (darkModeStylesheet) {
+                return true;
+            }
+            return false;
+        }
+
+        function changeTheme(elem) {
+            if(document.getElementById('dark-mode-stylesheet')){
+                removeDarkMode();
+            }else{
+                addDarkMode();
+            }   
+        }
+
+        </script>
+      <!-- add SEO -->
+
+</head>
+<body>
+    <!-- if login... -->
+<!-- <nav class="nav-transparent">
+    <div class="nav-left-container">
+        <form action="/search/index.html" method="get">
+            <div class="search-field" >
+                <div class="search-field-img">
+                    <button type="submit" style="all: unset;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.1 11.06a6.95 6.95 0 1 1 13.9 0 6.95 6.95 0 0 1-13.9 0zm6.94-8.05a8.05 8.05 0 1 0 5.13 14.26l3.75 3.75a.56.56 0 1 0 .8-.79l-3.74-3.73A8.05 8.05 0 0 0 11.04 3v.01z" fill="currentColor"></path></svg>
+                    </button>
+                </div>
+                <div>
+                    <input value="" type="text" name="query" id="query" placeholder="Search">
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="nav-right-container">
+        <a href="/">Home</a>
+        
+        <div class="btn dnon" onclick="window.location.href = '#newsletter'">Get started</div>
+    </div>
+</nav> -->
+<nav>
+    <div class="nav-left-container">
+        <a href="/"><img src="/static/img/logo.png"></a>
+        <span style="margin: auto;" id="draft-nav">
+                Draft in Anonymous
+        </span>
+    </div>
+    <div class="nav-right-container">
+        
+        <button onclick="finalPreview(this)" class="publish-btn btn-col2" style="background-color: rgba(59, 135, 201, .25); cursor: unset;" id="navbtn1">Final Preview</button>
+        <button onclick="publish()" class="publish-btn" style="background-color: rgba(26, 137, 23, .25); cursor: unset;" id="navbtn2">Publish</button>
+        <div>
+            <input type="checkbox" class="checkbox" id="checkbox">
+            <label for="checkbox" class="checkbox-label">
+                <svg class="fa-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"/></svg>
+                <svg class="fa-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M375.7 19.7c-1.5-8-6.9-14.7-14.4-17.8s-16.1-2.2-22.8 2.4L256 61.1 173.5 4.2c-6.7-4.6-15.3-5.5-22.8-2.4s-12.9 9.8-14.4 17.8l-18.1 98.5L19.7 136.3c-8 1.5-14.7 6.9-17.8 14.4s-2.2 16.1 2.4 22.8L61.1 256 4.2 338.5c-4.6 6.7-5.5 15.3-2.4 22.8s9.8 13 17.8 14.4l98.5 18.1 18.1 98.5c1.5 8 6.9 14.7 14.4 17.8s16.1 2.2 22.8-2.4L256 450.9l82.5 56.9c6.7 4.6 15.3 5.5 22.8 2.4s12.9-9.8 14.4-17.8l18.1-98.5 98.5-18.1c8-1.5 14.7-6.9 17.8-14.4s2.2-16.1-2.4-22.8L450.9 256l56.9-82.5c4.6-6.7 5.5-15.3 2.4-22.8s-9.8-12.9-17.8-14.4l-98.5-18.1L375.7 19.7zM269.6 110l65.6-45.2 14.4 78.3c1.8 9.8 9.5 17.5 19.3 19.3l78.3 14.4L402 242.4c-5.7 8.2-5.7 19 0 27.2l45.2 65.6-78.3 14.4c-9.8 1.8-17.5 9.5-19.3 19.3l-14.4 78.3L269.6 402c-8.2-5.7-19-5.7-27.2 0l-65.6 45.2-14.4-78.3c-1.8-9.8-9.5-17.5-19.3-19.3L64.8 335.2 110 269.6c5.7-8.2 5.7-19 0-27.2L64.8 176.8l78.3-14.4c9.8-1.8 17.5-9.5 19.3-19.3l14.4-78.3L242.4 110c8.2 5.7 19 5.7 27.2 0zM256 368a112 112 0 1 0 0-224 112 112 0 1 0 0 224zM192 256a64 64 0 1 1 128 0 64 64 0 1 1 -128 0z"/></svg>
+                <span class="ball"></span>
+            </label>
+        </div>
+    </div>
+</nav>
+
+<div class="root">
+    <div class="container">
+        <div id="sumbit">
+            <div class="closebtn" onclick="publishClose()">
+                <svg width="29" height="29"><path d="M20.13 8.11l-5.61 5.61-5.609-5.61-.801.801 5.61 5.61-5.61 5.61.801.8 5.61-5.609 5.61 5.61.8-.801-5.609-5.61 5.61-5.61" fill-rule="evenodd"></path></svg>
+            </div>
+            <div>
+                <h2>Story Preview</h2>
+                <div class="img-preview" id="blog_image">
+                    <span style="padding-left: 1rem; padding-right: 1rem;">Include a high-quality image in your story to make it more inviting to readers.</span>
+                </div>
+                <textarea name="" id="blogtitle" cols="30" rows="1" placeholder="Write a preview title*" oninput="auto_grow(this)"></textarea>
+                <hr>
+                <textarea name="" id="blogsubtitle" cols="30" rows="1" placeholder="Write a preview subtitle…" oninput="auto_grow(this)"></textarea>
+                <hr>
+                <p style="font-size: small;">
+                    Note: Changes here will affect how your story appears in public places like Blogifyr’s homepage and in subscribers’ inboxes — not the contents of the story itself.
+                </p>
+            </div>
+            <div>
+                <span>Publishing to: <b style="padding-left: 0.25rem;">user</b></span>
+                <p>Add or change topics (up to 5) so readers know what your story is about</p>
+                <div class="tags_area">
+                    <textarea name="" id="blogtags" cols="30" rows="1" placeholder="Add a topic separated by a comma ..." oninput="auto_grow(this)"></textarea>
+                    <!-- <input type="text" placeholder="Add a topic…"> -->
+                </div>
+                <div style="margin-top: 1rem; width: 100%;">
+                    <button class="publish-btn" onclick="publishDone()" id="publishDoneBtn" style="background-color: rgba(26, 137, 23, .25); cursor: unset;">Publish Now</button>
+                </div>
+            </div>
+        </div>
+        <div class="content" id="content" style="margin-top: 1rem; margin-bottom: 1rem;"></div>
+        <div id="writer-div">
+            <!-- <textarea id="writer"></textarea> -->
+            <div id="writer-toolbar"></div>
+            <div id="writer"></div>
+            <div id="writer-footer" style="display:flex">
+                <div id="writer-footer-wc" style="box-sizing:border-box; width:50%; padding:4px 0px; text-align:left">0 characters, 0 words</div>
+                <div id="writer-footer-pos" style="box-sizing:border-box; width:50%; padding:4px 0px; text-align:right">– : –</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer-bg">
+    <div class="container">
+        <!-- {{ rootFooterHTML|safe }} -->
+    </div>
+</div>
+<script>
+    // "bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list",
+    // ['bold', 'italic', 'strikethrough', '|', 'code', '|', 'h1', 'h2', '|', 'ul', 'ol', '|', 'blockquote', 'hr', '|', 'insertLink', 'insertImage']
+    myButtons = [
+    'bold',
+    'italic',
+    'strikethrough',
+    '|',
+    {
+      name: 'codeBlock', 
+      action: editor => {editor.wrapSelection('\n```', '```');},
+      innerHTML: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m20 3h-16c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2v-14c0-1.103-.897-2-2-2zm-16 16v-12h16l.002 12z"/><path d="m9.293 9.293-3.707 3.707 3.707 3.707 1.414-1.414-2.293-2.293 2.293-2.293zm5.414 0-1.414 1.414 2.293 2.293-2.293 2.293 1.414 1.414 3.707-3.707z"/></svg>',
+    },
+    'code', '|', 'h1', 'h2', '|', 'ul', 'ol', '|', 'blockquote', 'hr', '|', 'insertLink', 'insertImage',
+    // {
+    //   name: 'insertLink', 
+    //   action: editor => {
+    //     let dest = window.prompt('Link destination'); 
+    //     if (dest) editor.wrapSelection('[', `](<${dest}>)`);
+    //   }
+    // }
+  ]
+    const navbtn2 = document.getElementById("navbtn2");
+    const navbtn1 = document.getElementById("navbtn1");
+    onkeyup = ()=>{
+        if(tinyMDE.getContent()==''){
+            navbtn1.style.backgroundColor = 'rgba(59, 135, 201, .25)';
+            navbtn1.style.cursor = 'unset';
+            navbtn2.style.backgroundColor = 'rgba(26, 137, 23, .25)';
+            navbtn2.style.cursor = 'unset';
+        }else{
+            navbtn1.style.backgroundColor = 'revert-layer';
+            navbtn1.style.cursor = 'revert-layer';
+            navbtn2.style.backgroundColor = 'revert-layer';
+            navbtn2.style.cursor = 'revert-layer';
+        }
+    }
+    
+   
+    const render = document.getElementById("content"); 
+    const writer = document.getElementById("writer");
+    const writer_div = document.getElementById("writer-div");
+    const sumbit = document.getElementById("sumbit");
+    const nav = document.getElementsByTagName("nav")[0];
+
+    
+    var tinyMDE = new TinyMDE.Editor({ element: writer, content:'# Blog\nWrite Your Blog Here...'});
+    var commandBar = new TinyMDE.CommandBar({
+        element: "writer-toolbar",
+        editor: tinyMDE,
+        commands: myButtons
+    });
+    tinyMDE.addEventListener('selection', e => { 
+        let st = `${e.focus ? e.focus.row : '–'} : ${e.focus ? e.focus.col : '–'}`;
+        for (let command in e.commandState) {
+            if (e.commandState[command]) st = command.concat(' ', st);
+        }
+        document.getElementById('writer-footer-pos').innerHTML = st; 
+    });
+    tinyMDE.addEventListener('change', e => { 
+        document.getElementById('writer-footer-wc').innerHTML = `${e.content.length} characters, ${e.content.split(/\s+/).length} words`; 
+    });
+
+    function extractMarkdown(data) {
+        // Define the pattern to search for code blocks
+        const codeBlockPattern = /```(\w*)\n([\s\S]*?)\n```/g;
+        const codeBlockReplacement = '<pre><code class="$1">$2</code></pre>';
+        
+        // Perform the replacement for code blocks
+        let modifiedContent = data.replace(codeBlockPattern, codeBlockReplacement);
+        
+        // Define the pattern to search for images
+        const imagePattern = /!\[(.*?)\][ ]*\((.*?)\)/g;
+        const imageReplacement = '![$1]($2) <figcaption>$1</figcaption>';
+        
+        // Perform the replacement for images
+        modifiedContent = modifiedContent.replace(imagePattern, imageReplacement);
+        
+        // Convert markdown to HTML
+        
+        // Split the content to separate HTML and markdown parts
+        const htmlTagPattern = /(<[^>]+>)/g;
+        const parts = modifiedContent.split(htmlTagPattern);
+        
+        // Convert markdown parts to HTML and preserve HTML tags
+        const htmlContent = parts.map(part => {
+            return htmlTagPattern.test(part) ? part : markdown.toHTML(part);
+        }).join('');
+        
+        
+        // Replace <hr /> with custom separator
+        const finalContent = htmlContent.replace(/<hr \/>/g, '<div class="separator"><span>• • •</span></div>');
+        
+        return finalContent;
+    }
+
+    function extractTitle(markdown) {
+        // Define the pattern to search for headings
+        const headingPattern = /^(#{1,6})\s+(.*)$/m;
+        const match = headingPattern.exec(markdown);
+        
+        if (match) {
+            const text = match[2];
+            return text;
+        }
+        return null;
+    }
+
+    function finalPreview(elem){
+        if(tinyMDE.getContent()!=''){
+            if(elem.innerHTML == "Final Preview"){
+                elem.innerHTML = "Edit";
+                elem.style.paddingLeft = '1rem';
+                elem.style.paddingRight = '1rem';
+            }
+            else{
+                elem.innerHTML = "Final Preview";
+                elem.style.paddingLeft = '10px';
+                elem.style.paddingRight = '10px';
+            }
+
+            if(render.innerHTML == ""){
+                render.innerHTML+=extractMarkdown(tinyMDE.getContent());
+                writer_div.style.display = 'none';
+                hljs.highlightAll();
+            }else{
+                render.innerHTML="";
+                writer_div.style.display = 'block';
+            }
+        }
+    }
+    function publish(){
+        const data = tinyMDE.getContent();
+        if(data!=''){
+            const pattern = /!\[.*?\][ ]*\((.*?)\)/;
+            const match = data.match(pattern);
+            const firstImageUrl = match ? match[1] : null;
+            const blogImage = document.getElementById('blog_image');
+            if(firstImageUrl == null){
+                blogImage.innerHTML = '<span style="padding-left: 1rem; padding-right: 1rem;">Include a high-quality image in your story to make it more inviting to readers.</span>';
+            }else{
+                blogImage.innerHTML = '<img src="'+firstImageUrl+'" alt="" srcset="" style="object-fit: cover; width: 100%; height: 100%;">';
+                blogImage.style.paddingRight = 0;
+                blogImage.style.paddingLeft = 0;
+            }
+
+            render.innerHTML="";
+            writer_div.style.display = 'none';
+            sumbit.style.display = 'flex';
+            nav.style.display = 'none';
+            console.log("Publishing");
+            const tt = extractTitle(data);
+            if(tt != null) {
+                title.value = extractTitle(data);
+                titleInpHandler();
+            }
+        }
+    }
+
+    
+    
+    const tags = document.getElementById("blogtags");
+    const title = document.getElementById("blogtitle");
+    const publishDoneBtn = document.getElementById("publishDoneBtn");
+    function titleInpHandler(){
+        if(title.value==''){
+            publishDoneBtn.style.backgroundColor = 'rgba(26, 137, 23, .25)';
+            publishDoneBtn.style.cursor = 'unset';
+        }else{
+            publishDoneBtn.style.backgroundColor = 'revert-layer';
+            publishDoneBtn.style.cursor = 'revert-layer';
+        }
+    }
+    title.oninput = titleInpHandler;
+    const subtitle = document.getElementById("blogsubtitle");
+
+    function publishDone(){
+        if(title.value!=''){
+            let tags_txt = '[';
+            if (tags.value!=='') {
+                const tags_lst = tags.value.split(',');
+                for(var i=0; i<tags_lst.length-1; i++) tags_txt += `'${tags_lst[i].trim()}', `;
+                if (tags_lst.length>0) tags_txt += `'${tags_lst[i].trim()}'`;
+            }
+            tags_txt += ']';
+            console.log(tags_txt, title.value, subtitle.value);
+            const text = `---
+layout: post
+title: '${title.value}'
+description: '${subtitle.value}'
+tags: ${tags_txt}
+---
+${tinyMDE.getContent()}`;
+            
+            // Create a Blob object from the text
+            const blob = new Blob([text], { type: 'text/plain' });
+            // Create a temporary URL for the Blob
+            const blobUrl = URL.createObjectURL(blob);
+            
+
+            const url = "https://api.github.com/repos/thefcraft/blog/contents/md";
+            fetch(url).then(response => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch contents: ${response.status}`);
+                }
+                return response.json();
+            }).then(contents => {
+                // Create a new anchor element
+                const downloadLink = document.createElement('a');
+                downloadLink.href = blobUrl;
+                downloadLink.download = `${contents.length+1}.md`;
+                downloadLink.textContent = 'Download md File';
+                // Append the anchor element to the body
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+                // Clean up: Revoke the Blob URL
+                URL.revokeObjectURL(blobUrl);
+
+                let new_url = `https://github.com/thefcraft/blog/new/main/md?filename=${contents.length+1}.md&value=Paste%20the%20content%20of%20downloaded%20file%20here`;
+                window.location.href = new_url;
+                // If you want to count only files (excluding directories):
+                // const filesCount = contents.filter(item => item.type === 'file').length;
+                // console.log(`Number of files: ${filesCount}`);
+            }).catch(error => {
+                console.error('Error fetching contents:', error);
+            });
+        }
+    }
+    function publishClose(){
+        render.innerHTML="";
+        writer_div.style.display = 'block';
+        sumbit.style.display = 'none';
+        nav.style.display = 'flex';
+    }
+
+    function auto_grow(element) {
+        if(element.value == ''){
+            element.style.height = 'unset';
+        }else{
+            element.style.height = "5px";
+            element.style.height = (element.scrollHeight) + "px";
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+    }
+</script>
+<script>
+
+        
+    const checkbox = document.getElementById("checkbox")
+    checkbox.checked = !isDarkMode();
+    checkbox.addEventListener("change", () => {
+        localStorage.setItem('darkmode', !checkbox.checked);
+        console.log("darkmode set to: ", !checkbox.checked);
+        if (checkbox.checked) removeDarkMode();
+        else addDarkMode();
+    })
+
+    let darkmode = localStorage.getItem('darkmode');
+    if (darkmode != null) {
+        console.log(darkmode);
+        if (darkmode==='true') {
+            addDarkMode();
+            checkbox.checked = false;
+        }
+    }else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            addDarkMode();
+            checkbox.checked = false;
+    }
+</script>
+
+</body>
+</html>
