@@ -9,7 +9,7 @@
         <loc>https://blog.thefcraft.site/</loc>
         <changefreq>daily</changefreq>
         <priority>1</priority>
-        <lastmod>2024-06-16T13:31:27+05:30</lastmod>
+        <lastmod>2024-06-16T14:34:56+05:30</lastmod>
     </url>
     <url>
         <loc>https://blog.thefcraft.site/posts/</loc>
@@ -43,41 +43,6 @@
     </url>
     <url>
         <loc>https://blog.thefcraft.site/posts/</loc>
-        <changefreq>monthly</changefreq>
-        <priority>1</priority>
-    </url>
-	<url>
-        <loc>https://blog.thefcraft.site/posts/building-an-http-server-in-c-a-step-by-step-guide-d86bc001</loc>
-        <changefreq>monthly</changefreq>
-        <priority>1</priority>
-    </url>
-	<url>
-        <loc>https://blog.thefcraft.site/posts/demystifying-machine-learning-from-basics-to-applications-20fcd768</loc>
-        <changefreq>monthly</changefreq>
-        <priority>1</priority>
-    </url>
-	<url>
-        <loc>https://blog.thefcraft.site/posts/python-from-zero-to-hero-ace1850b</loc>
-        <changefreq>monthly</changefreq>
-        <priority>1</priority>
-    </url>
-	<url>
-        <loc>https://blog.thefcraft.site/posts/the-benefits-of-mindfulness-meditation-for-mental-health-ed18a9ea</loc>
-        <changefreq>monthly</changefreq>
-        <priority>1</priority>
-    </url>
-	<url>
-        <loc>https://blog.thefcraft.site/posts/the-evolution-of-web-development-from-html-to-modern-frameworks-631979b2</loc>
-        <changefreq>monthly</changefreq>
-        <priority>1</priority>
-    </url>
-	<url>
-        <loc>https://blog.thefcraft.site/posts/the-importance-of-cybersecurity-in-the-digital-age-e7968249</loc>
-        <changefreq>monthly</changefreq>
-        <priority>1</priority>
-    </url>
-	<url>
-        <loc>https://blog.thefcraft.site/posts/the-rise-of-artificial-intelligence-transforming-industries-and-everyday-life-e422690a</loc>
         <changefreq>monthly</changefreq>
         <priority>1</priority>
     </url>
