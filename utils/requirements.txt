@@ -1,0 +1,7 @@
+Flask
+cryptography
+Werkzeug
+shortuuid
+markdown2
+beautifulsoup4
+PyYAML

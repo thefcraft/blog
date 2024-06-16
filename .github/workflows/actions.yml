@@ -1,0 +1,45 @@
+name: run updater
+
+on:
+  push:
+    paths:
+      - md/**
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v2
+      
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9' #install python version needed
+      
+      - name: install python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r utils/requirements.txt
+      
+      - name: execute log py script # run update.py
+        run: python utils/log.py
+
+      - name: execute md2blog py script # run md2blog.py
+        run: python utils/md2blog.py
+      
+      - name: execute update py script # run update.py
+        run: python utils/update.py
+
+      - name: commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git diff-index --quiet HEAD || (git commit -a -m "update blogs" -allow-empty)
+
+      - name: push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main

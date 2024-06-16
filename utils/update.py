@@ -1,9 +1,6 @@
 from flask import Flask, render_template
-from style import blog, add_ellipsis, extract_markdown, readingTime, get_url, html_readingTime, html_postDate, html_title, html_img, html_desc, html_tag, get_url_by_name
-import os, json, random
-import xml.etree.ElementTree as ET
-from pprint import pprint
-from bs4 import BeautifulSoup
+from style import add_ellipsis, extract_markdown, readingTime, get_url, html_readingTime, html_postDate, html_title, html_img, html_desc, html_tag, get_url_by_name
+import os, json
 from datetime import datetime
 basedir = os.path.dirname(os.path.abspath(__file__))
 RUN_SERVER = False
