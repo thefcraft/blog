@@ -67,6 +67,9 @@
     overflow-y: hidden;
     display: block!important;
 }
+.MJXc-TeX-math-I, .MJXc-TeX-main-R, .MJXc-TeX-unknown-R {
+    font-size: 20px;
+}
 .content p{
     font-size: 20px;
     /* margin: 40px 0px -9px; */
