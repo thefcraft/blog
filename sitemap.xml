@@ -9,7 +9,7 @@
         <loc>https://blog.thefcraft.site/</loc>
         <changefreq>daily</changefreq>
         <priority>1</priority>
-        <lastmod>2024-06-16T14:34:56+05:30</lastmod>
+        <lastmod>2024-06-17T11:40:18+05:30</lastmod>
     </url>
     <url>
         <loc>https://blog.thefcraft.site/posts/</loc>
@@ -43,6 +43,11 @@
     </url>
     <url>
         <loc>https://blog.thefcraft.site/posts/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1</priority>
+    </url>
+	<url>
+        <loc>https://blog.thefcraft.site/posts/mastering-rsa-cryptography-from-mathematical-theory-to-python-implementation-ae7a6c7e</loc>
         <changefreq>monthly</changefreq>
         <priority>1</priority>
     </url>

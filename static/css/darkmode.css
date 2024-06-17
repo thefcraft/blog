@@ -105,6 +105,12 @@ footer a:hover{
 .blog-reaction-div .blog-reaction div:hover, .blog-reaction-div  svg:hover{
     color: #6d6d6d !important;
 }
+figcaption{
+    color: #fcfcfcbf!important;
+}
+.content blockquote{
+    box-shadow: inset 3px 0 0 0 #8f8f8f;
+}
 @media only screen and (max-width: 900px) {
     .root .right {
         border-bottom: 1px solid #4a4a4a !important;

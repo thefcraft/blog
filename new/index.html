@@ -294,7 +294,7 @@
         
         
         // Replace <hr /> with custom separator
-        const finalContent = htmlContent.replace(/<hr \/>/g, '<div class="separator"><span>• • •</span></div>');
+        const finalContent = htmlContent.replace(/<hr(.*)\/>/g, '<div class="separator"><span>• • •</span></div>');
         
         return finalContent;
     }
