@@ -9,7 +9,7 @@ app = Flask(__name__, template_folder=os.path.join(basedir, 'templates'), static
 keywords = 'Blogifyr, free blogging platform, diverse topics, community-driven, storytelling, articles, writers, readers, content discovery, online blogging, free content, digital publications, personal essays, opinion pieces, creative writing, technology, culture, lifestyle, education'
 
 # inpath = ''
-outdir = os.path.join(basedir, '..\\posts')
+outdir = os.path.join(basedir, '..', 'posts')
 
 def Trending(n=3):
     blogs = [(os.path.join(outdir, i, 'index.html'), i) for i in os.listdir(outdir) if os.path.isdir(os.path.join(outdir, i))]
@@ -104,7 +104,7 @@ def update_sitemap():
         <changefreq>monthly</changefreq>
         <priority>1</priority>
     </url>'''
-    for url in [name for name in os.listdir(outdir) if os.path.isdir(os.path.join(basedir, '..\\posts', name))]:
+    for url in [name for name in os.listdir(outdir) if os.path.isdir(os.path.join(basedir, '..', 'posts', name))]:
         xml+=f'''\n\t<url>
         <loc>https://blog.thefcraft.site/posts/{url}</loc>
         <changefreq>monthly</changefreq>
@@ -148,7 +148,7 @@ def index():
 if __name__ == '__main__':
     update_api()
     with app.app_context(): 
-        with open(os.path.join(os.path.join(basedir), '..\\index.html'), 'w', encoding='utf') as f:
+        with open(os.path.join(os.path.join(basedir), '..', 'index.html'), 'w', encoding='utf') as f:
             f.write(index())
     update_sitemap()
         

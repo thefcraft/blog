@@ -4,8 +4,8 @@ import os, random
 from datetime import datetime
 basedir = os.path.dirname(os.path.abspath(__file__))
 
-inpath = os.path.join(basedir, '..\\md')
-outdir = os.path.join(basedir, '..\\posts')
+inpath = os.path.join(basedir, '..', 'md')
+outdir = os.path.join(basedir, '..', 'posts')
 app = Flask(__name__, template_folder=os.path.join(basedir, 'templates'), static_folder=os.path.join(os.path.join(basedir, '..'), 'static'))
 
 def index(title, description, data, keywords, url, tags, timestamp=None):
