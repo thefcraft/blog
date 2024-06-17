@@ -65,7 +65,7 @@
 .MathJax_CHTML{
     overflow-x: auto;
     overflow-y: hidden;
-    display: block;
+    display: block!important;
 }
 .content p{
     font-size: 20px;
