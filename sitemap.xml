@@ -9,7 +9,7 @@
         <loc>https://blog.thefcraft.site/</loc>
         <changefreq>daily</changefreq>
         <priority>1</priority>
-        <lastmod>2024-06-17T13:48:45+05:30</lastmod>
+        <lastmod>2024-06-17T19:24:25+05:30</lastmod>
     </url>
     <url>
         <loc>https://blog.thefcraft.site/posts/</loc>
@@ -43,6 +43,16 @@
     </url>
     <url>
         <loc>https://blog.thefcraft.site/posts/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1</priority>
+    </url>
+	<url>
+        <loc>https://blog.thefcraft.site/posts/mastering-linear-regression-from-scratch-with-gradient-descent-only-f88a87ac</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1</priority>
+    </url>
+	<url>
+        <loc>https://blog.thefcraft.site/posts/mastering-linear-regression-from-scratch-without-gradient-descent-e0e91840</loc>
         <changefreq>monthly</changefreq>
         <priority>1</priority>
     </url>
