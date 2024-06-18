@@ -199,11 +199,7 @@
             <h2>Discover more of what matters to you</h2>
             <div class="tags" id="trendingTags">
                 {% for tg in trendingTags %}
-                    {% if tag and tg.name == tag.name %}
-                    <a href="" class="active">{{ tg.name }}</a>    
-                    {% else %}
-                    <a href="/search/index.html?tag={{ tg.url }}">{{ tg.name }}</a>    
-                    {% endif %}
+                    {% if tag and tg.name == tag.name %}<a href="" class="active">{{ tg.name }}</a>{% else %}<a href="/search/index.html?tag={{ tg }}">{{ tg }}</a>    {% endif %}
                 {% endfor %}
             </div>
             <a href="/tag" class="more">See more topics</a>
