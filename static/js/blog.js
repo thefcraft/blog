@@ -70,3 +70,24 @@ function handel_share(event){
 document.querySelector('#share-nav').addEventListener('click', event => {handel_share(event);});
 document.querySelector('#share-footer').addEventListener('click', event => {handel_share(event);});
 document.querySelector('#speak-nav').addEventListener('click', event => {speak();});
+
+
+const checkbox = document.getElementById("checkbox")
+checkbox.checked = !isDarkMode();
+checkbox.addEventListener("change", () => {
+    localStorage.setItem('darkmode', !checkbox.checked);
+    console.log("darkmode set to: ", !checkbox.checked);
+    if (checkbox.checked) removeDarkMode();
+    else addDarkMode();
+})
+let darkmode = localStorage.getItem('darkmode');
+if (darkmode != null) {
+    console.log(darkmode);
+    if (darkmode==='true') {
+        addDarkMode();
+        checkbox.checked = false;
+    }
+}else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        addDarkMode();
+        checkbox.checked = false;
+}

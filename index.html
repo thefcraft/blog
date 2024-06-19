@@ -36,46 +36,6 @@
 
     <script type="text/javascript" src="/static/js/index.js"></script>
 
-    <script>
-        // Function to add dark mode stylesheet
-        function addDarkMode() {
-            let head = document.getElementsByTagName('HEAD')[0];
-            let link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.type = 'text/css';
-            link.href = '/static/css/darkmode.css';
-            link.id = 'dark-mode-stylesheet';  // Adding an id for easy removal
-            head.appendChild(link);
-        }
-
-        // Function to remove dark mode stylesheet
-        function removeDarkMode() {
-            let darkModeStylesheet = document.getElementById('dark-mode-stylesheet');
-            if (darkModeStylesheet) {
-                darkModeStylesheet.parentNode.removeChild(darkModeStylesheet);
-            }
-        }
-
-        function isDarkMode() {
-            let darkModeStylesheet = document.getElementById('dark-mode-stylesheet');
-            if (darkModeStylesheet) {
-                return true;
-            }
-            return false;
-        }
-
-        function changeTheme(elem) {
-            if(document.getElementById('dark-mode-stylesheet')){
-                removeDarkMode();
-            }else{
-                addDarkMode();
-            }   
-        }
-
-        </script>
-
-
-
     
 
 
@@ -391,21 +351,21 @@
             <h2>Discover more of what matters to you</h2>
             <div class="tags" id="trendingTags">
                 
-                    <a href="/search/index.html?tag=Machine Learning">Machine Learning</a>    
-                
                     <a href="/search/index.html?tag=Cybersecurity">Cybersecurity</a>    
                 
-                    <a href="/search/index.html?tag=Gradient Descent">Gradient Descent</a>    
-                
                     <a href="/search/index.html?tag=Linear Regression">Linear Regression</a>    
+                
+                    <a href="/search/index.html?tag=Machine Learning">Machine Learning</a>    
+                
+                    <a href="/search/index.html?tag=Mathematics">Mathematics</a>    
+                
+                    <a href="/search/index.html?tag=Gradient Descent">Gradient Descent</a>    
                 
                     <a href="/search/index.html?tag=Cryptography">Cryptography</a>    
                 
                     <a href="/search/index.html?tag=Python">Python</a>    
                 
                     <a href="/search/index.html?tag=Encryption">Encryption</a>    
-                
-                    <a href="/search/index.html?tag=Mathematics">Mathematics</a>    
                 
             </div>
             <a href="/tag" class="more">See more topics</a>
@@ -442,227 +402,7 @@
 <div style="display: flex; justify-content: center; margin-top: -2rem; padding-bottom: 1rem;">
     <h2>Blogifyr – Uncover Gems, Explore Worlds.</h2>
 </div>
-
-<script>
-    const nav = document.getElementsByTagName("nav")[0];
-    const hero = document.getElementsByClassName("hero")[0];
-    const rightFixed = document.getElementById("right-fixed");
-    const rightFixedContainer = document.getElementById("right-fixed-container");
-
-    // Sample array of blog objects (titles are assumed to be unique for simplicity)
-    let allblogs = [    
-    ];
-
-    function getRandomElements(array, numElements) {
-        // Sort the array randomly
-        array.sort(() => Math.random() - 0.5);
-    
-        // Return a slice of the first numElements elements
-        return array.slice(0, numElements);
-    }
-
-    const postsContainer = document.getElementById("postsContainer");
-    const trendingPosts = document.getElementById("trendingPosts");
-    const trendingTags = document.getElementById("trendingTags");
-    postsContainer.innerHTML = '';
-    let posts_chunk_idx = 0;
-    let posts_chunk = [];
-    fetch('/api/posts.json').then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-            return response.json();
-        }).then(data => {
-            posts_chunk = getRandomElements(data.posts_chunk, data.posts_chunk.length);
-            setTrendingPost();
-            loadMoreBtn(null);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-    });
-
-    function setTrendingPost(){
-        // Make a GET request
-        fetch(`/api/${getRandomElements(posts_chunk, 1)[0]}`).then(response => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-                return response.json();
-            })
-            .then(data => {
-                trendingPosts.innerHTML = '';
-                let trendingblogs = getRandomElements(data.posts, 3);
-
-                trendingblogs.forEach((post, idx) => {
-                    trendingPosts.innerHTML += `<div class="item">
-                                <aside>
-                                    <span class="idx">0${ idx+1 }</span>
-                                </aside>
-                                <aside>
-                                    <div class="img">
-                                        <img alt="${ post.author }" src="/static/userPNG/${ post.author_img?post.author_img:'None.png' }" width="20" height="20" loading="lazy">
-                                        <a href="${ post.author_url }">
-                                            <h4>${ post.author }</h4>
-                                        </a>
-                                    </div>
-                                
-                                    <a href="${ post.url }">
-                                        <div>
-                                            <h2 class="overflow-ellipsis">${ post.title }</h2>
-                                        </div>
-                                        <span>${ post.date } · ${ post.length } read</span>
-                                    </a>
-                                </aside>
-                            </div>`;
-                });
-            
-            })
-            .catch(error => {
-                console.error('Error:', error);
-        });
-    }
-    
-    function loadMoreBtn(element){
-        console.log("Loading more...");
-        posts_chunk_idx ++;
-        if (posts_chunk.length == posts_chunk_idx) posts_chunk_idx = 0;
-        // Make a GET request
-        fetch(`/api/${posts_chunk[posts_chunk_idx]}`).then(response => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-                return response.json();
-            })
-            .then(data => {
-                allblogs = data.posts;
-                // console.log(data.posts);
-                let blogs = getRandomElements(data.posts, data.posts.length);
-                blogs.forEach(post => {
-                    let ifelseblock = '';
-                    if (post.img) {
-                        ifelseblock = `<a href="${ post.url }">
-                        <img alt="${ post.title }" class="blog-img" src="${ post.img }" width="200" height="134"
-                            loading="lazy">
-                    </a>`;
-                    }else ifelseblock = '<div class="blog-img"></div>';
-
-                    postsContainer.innerHTML += `
-                    <div class="item">
-                <aside style="width: -webkit-fill-available;">
-                    <div class="img">
-                        <img alt="${ post.author }" src="/static/userPNG/${ post.author_img?post.author_img:'None.png' }" width="20" height="20" loading="lazy">
-                        <a href="${ post.author_url }">
-                            <h4>${ post.author }</h4>
-                        </a>
-                    </div>
-                    <a href="${ post.url }">
-                        <div class="title" id="title_hover">
-                            <h2 class="overflow-ellipsis">${ post.title }</h2>
-                            <h3 class="overflow-ellipsis-3">${ post.subtitle }</h3>
-                        </div>
-                    </a>
-                    <div class="meta">
-                        <div>
-                            <!-- <a style="background-color: #f2f2f2; padding: 3px 8px; border-radius: 99em; margin-right: 8px;"  
-                                onmouseover="this.style.backgroundColor='#e7e7e7'"
-                                onmouseout="this.style.backgroundColor='#f2f2f2'"
-                                href="${ post.tag_url }">${ post.tag }</a>     -->
-                            <a href="${ post.url }">
-                                <span>${ post.date } · ${ post.length } read</span>
-                            </a>
-                        </div>
-                    </div>
-                </aside>
-                <aside style="display: flex;align-items: center;">
-                    ${ ifelseblock }
-                </aside>
-            </div>`;
-
-                    });
-
-            })  
-            .catch(error => {
-                console.error('Error:', error);
-        });
-    }
-       
-        
-    fetch('/api/tags.json').then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-            return response.json();
-        })
-        .then(data => {
-            trendingTags.innerHTML = '';
-            // console.log(data.posts);
-            let tags = getRandomElements(data.tags, 9);
-            tags.forEach(tag => {
-                trendingTags.innerHTML += `<a href="/search/index.html?tag=${ tag.url} ">${ tag.name }</a>`;
-            });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-    });
-
-    
-
-    
-    
-
-    onload = (e) => {
-        // setTimeout(()=>{
-        //     window.scrollTo({ top: 0, behavior: 'smooth' }); // TODO auto scroll to top
-        // }, 100);
-
-        if (document.documentElement.scrollTop > rightFixedContainer.offsetTop - nav.scrollHeight - 56) {
-            rightFixed.style.position = "fixed";
-            rightFixed.style.top = (nav.scrollHeight + 56) + "px";
-        }
-    }
-    let loading = 0;
-
-    onscroll = (e) => {
-        if (document.documentElement.scrollTop > rightFixedContainer.offsetTop - nav.scrollHeight - 56) {
-            rightFixed.style.position = "fixed";
-            rightFixed.style.top = (nav.scrollHeight + 56) + "px";
-        } else {
-            rightFixed.style.position = "unset";
-        }
-        if (document.documentElement.scrollTop > (hero.scrollHeight - nav.scrollHeight)) {
-            // console.log("green");
-            nav.classList.add('nav-transparent');
-        } else {
-            // console.log("yellow");
-            nav.classList.remove('nav-transparent');
-        }
-    }
-</script>
-
-    <script>
-
-        
-        const checkbox = document.getElementById("checkbox")
-        checkbox.checked = !isDarkMode();
-        checkbox.addEventListener("change", () => {
-            localStorage.setItem('darkmode', !checkbox.checked);
-            console.log("darkmode set to: ", !checkbox.checked);
-            if (checkbox.checked) removeDarkMode();
-            else addDarkMode();
-        })
-
-        let darkmode = localStorage.getItem('darkmode');
-        if (darkmode != null) {
-            console.log(darkmode);
-            if (darkmode==='true') {
-                addDarkMode();
-                checkbox.checked = false;
-            }
-        }else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                addDarkMode();
-                checkbox.checked = false;
-        }
-    </script>
+<script src="/static/js/newUser.js"></script>
 
 </body>
 </html>
