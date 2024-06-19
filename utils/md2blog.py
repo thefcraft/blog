@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from style import blog, add_ellipsis, extract_markdown, readingTime, get_url, extract_metadata_and_markdown, sha256, get_img, html_timestamp
 import os, random
+from bs4 import BeautifulSoup
 from datetime import datetime
 basedir = os.path.dirname(os.path.abspath(__file__))
 
@@ -42,6 +43,10 @@ def index(title, description, data, keywords, url, tags, timestamp=None):
                         )
 
 if __name__ == '__main__': 
+    import argparse
+    parser = argparse.ArgumentParser(description='Convert markdown to HTML')
+    parser.add_argument('--force', action='store_true', help='Force generation.')
+    args = parser.parse_args()
     for md_name in os.listdir(inpath):
         try:
             with open(os.path.join(inpath, md_name), 'r', encoding='utf') as f:
@@ -63,9 +68,12 @@ if __name__ == '__main__':
                 else:
                     if hash_read == sha256(data):
                         print(f"ALREADY EXISTS : {url}")
-                        continue
+                        if not args.force:
+                            continue
                     print(f"UPDATING EXISTS : {url}")
-                    timestamp = html_timestamp(os.path.join(outpath, 'index.html'))
+                    with open(os.path.join(outpath, 'index.html'), 'r', encoding='utf') as f:
+                        soup = BeautifulSoup(f.read(), 'html.parser')
+                    timestamp = html_timestamp(soup)
                 finally:
                     with open(os.path.join(outpath, 'sha256.hash'), 'wb') as fhash: fhash.write(sha256(data))
                 

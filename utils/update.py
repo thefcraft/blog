@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from style import add_ellipsis, extract_markdown, readingTime, get_url, html_readingTime, html_postDate, html_title, html_img, html_desc, html_tag, get_url_by_name
 import os, json
+from bs4 import BeautifulSoup
 from datetime import datetime
 basedir = os.path.dirname(os.path.abspath(__file__))
 RUN_SERVER = False
@@ -10,6 +11,11 @@ keywords = 'Blogifyr, free blogging platform, diverse topics, community-driven, 
 
 # inpath = ''
 outdir = os.path.join(basedir, '..', 'posts')
+
+def open_b(path):
+    with open(path, 'r', encoding='utf') as f:
+        soup = BeautifulSoup(f.read(), 'html.parser')
+    return soup
 
 def Trending(n=3):
     blogs = [(os.path.join(outdir, i, 'index.html'), i) for i in os.listdir(outdir) if os.path.isdir(os.path.join(outdir, i))]
@@ -21,7 +27,7 @@ def Trending(n=3):
               'length': f'{html_readingTime(b)} min',
               'author': 'ThefCraft',
               'author_url': '/about',
-              'author_img': 'c5f67cbc-b58f-46cc-864a-5e48b2a6d582.jpg'} for idx, (b, url) in enumerate(blogs)]
+              'author_img': 'c5f67cbc-b58f-46cc-864a-5e48b2a6d582.jpg'} for idx, (b, url) in enumerate([(open_b(b), url) for b, url in blogs])]
     return posts
 
 allTags = []
@@ -52,7 +58,7 @@ def get_posts():
                   'length': f'{html_readingTime(b)} min',
                   'author': 'ThefCraft',
                   'author_url': '/about',
-                  'author_img': 'c5f67cbc-b58f-46cc-864a-5e48b2a6d582.jpg'} for b, url in blogs]
+                  'author_img': 'c5f67cbc-b58f-46cc-864a-5e48b2a6d582.jpg'} for b, url in [(open_b(b), url) for b, url in blogs]]
     return posts
 
 def update_sitemap():

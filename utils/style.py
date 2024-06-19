@@ -113,7 +113,7 @@ def readingTime(markdown_text: str, words_per_minute: int = 200):
     reading_time = word_count // words_per_minute
     return max(reading_time, 1)
 
-def get_img(markdown_text):
+def get_img(markdown_text:str):
     pattern = r"!\[.*?\][ ]*\((.*?)\)"
     match = re.search(pattern, markdown_text)
     return match.group(1) if match else None
@@ -121,18 +121,18 @@ def get_img(markdown_text):
 def get_url_by_name(name:str):
     return secure_filename(name)
 
-def get_img(markdown_text):
+def get_img(markdown_text:str):
     pattern = r"!\[.*?\][ ]*\((.*?)\)"
     match = re.search(pattern, markdown_text)
     return match.group(1) if match else None
 
-def add_ellipsis(text_content, max_len=100):
+def add_ellipsis(text_content:str, max_len=100):
     if isinstance(text_content, str):
         return text_content[:max_len-1]+'...' if len(text_content)>=max_len else text_content
     else: 
         return text_content
 
-def get_sub_title(markdown_text):
+def get_sub_title(markdown_text:str):
     html_content = markdown2.markdown(markdown_text)
     soup = BeautifulSoup(html_content, 'html.parser')
     text_content = soup.get_text()
@@ -160,7 +160,7 @@ def check_url(url, blog, key:str)->bool:
     if not blog: return False
     return get_url(blog.title, blog_id=blog.id, key=key) == url
 
-def extract_metadata_and_markdown(text):
+def extract_metadata_and_markdown(text:str):
     # Define the regular expression pattern to match text between '---' delimiters
     pattern = r'---\n(.*?)\n---'
     
@@ -173,52 +173,38 @@ def extract_metadata_and_markdown(text):
     md = re.sub(pattern, '', text, count=1, flags=re.DOTALL).lstrip()
     return (metadata, md)
 
-def html_timestamp(path):
-    with open(path, 'r', encoding='utf') as f:
-        soup = BeautifulSoup(f.read(), 'html.parser')
-        meta_tag = soup.find('meta', property='article:published_time')
-        if meta_tag:
-            published_time = meta_tag['content']
-            return datetime.strptime(published_time, '%Y-%m-%dT%H:%M:%S.%fZ')
-        else: return None
+def html_timestamp(soup:BeautifulSoup):
+    meta_tag = soup.find('meta', property='article:published_time')
+    if meta_tag:
+        published_time = meta_tag['content']
+        return datetime.strptime(published_time, '%Y-%m-%dT%H:%M:%S.%fZ')
+    else: return None
 
-def html_title(path):
-    with open(path, 'r', encoding='utf') as f:
-        soup = BeautifulSoup(f.read(), 'html.parser')
-        return soup.title.text
+def html_title(soup:BeautifulSoup):
+    return soup.title.text
     
-def html_postDate(path):
-    with open(path, 'r', encoding='utf') as f:
-        soup = BeautifulSoup(f.read(), 'html.parser')
-        txt = soup.find("div", {"id": "readTime"}).text
-        return txt.split('·')[1].strip()
+def html_postDate(soup:BeautifulSoup):
+    txt = soup.find("div", {"id": "readTime"}).text
+    return txt.split('·')[1].strip()
     
-def html_readingTime(path):
-    with open(path, 'r', encoding='utf') as f:
-        soup = BeautifulSoup(f.read(), 'html.parser')
-        txt = soup.find("div", {"id": "readTime"}).text
-        return [int(s) for s in txt.split('·')[0].strip().split() if s.isdigit()][0]
+def html_readingTime(soup:BeautifulSoup):
+    txt = soup.find("div", {"id": "readTime"}).text
+    return [int(s) for s in txt.split('·')[0].strip().split() if s.isdigit()][0]
 
-def html_img(path):
-    with open(path, 'r', encoding='utf') as f:
-        soup = BeautifulSoup(f.read(), 'html.parser')
-        first_image = soup.find("div", {"id": "content"}).find('img')
-        if first_image:
-            image_source = first_image['src']
-            return image_source
-        return None
-def html_tag(path):
-    with open(path, 'r', encoding='utf') as f:
-        soup = BeautifulSoup(f.read(), 'html.parser')
-        tags = soup.find("div", {"id": "tag-footer"}).find_all('a')
-        return [tag.text for tag in tags]
+def html_img(soup:BeautifulSoup):
+    first_image = soup.find("div", {"id": "content"}).find('img')
+    if first_image:
+        image_source = first_image['src']
+        return image_source
+    return None
+def html_tag(soup:BeautifulSoup):
+    tags = soup.find("div", {"id": "tag-footer"}).find_all('a')
+    return [tag.text for tag in tags]
 
-def html_desc(path):
-    with open(path, 'r', encoding='utf') as f:
-        soup = BeautifulSoup(f.read(), 'html.parser')
-        heading = soup.find("div", {"class": "heading"})
-        desc = heading.find("h2")
-        return desc.text if desc else None
+def html_desc(soup:BeautifulSoup):
+    heading = soup.find("div", {"class": "heading"})
+    desc = heading.find("h2")
+    return desc.text if desc else None
     
 class blog:
     def __init__(self, 
