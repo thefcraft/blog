@@ -9,7 +9,7 @@
         <loc>https://blog.thefcraft.site/</loc>
         <changefreq>daily</changefreq>
         <priority>1</priority>
-        <lastmod>2024-06-19T19:49:49+05:30</lastmod>
+        <lastmod>2024-06-22T21:07:05+05:30</lastmod>
     </url>
     <url>
         <loc>https://blog.thefcraft.site/posts/</loc>
@@ -63,6 +63,11 @@
     </url>
 	<url>
         <loc>https://blog.thefcraft.site/posts/sha-256-algorithm-explanation-and-implementation-in-python-49af91dd</loc>
+        <changefreq>monthly</changefreq>
+        <priority>1</priority>
+    </url>
+	<url>
+        <loc>https://blog.thefcraft.site/posts/understanding-basic-symmetric-key-encryption-in-python-060d533c</loc>
         <changefreq>monthly</changefreq>
         <priority>1</priority>
     </url>
